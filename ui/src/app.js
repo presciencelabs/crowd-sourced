@@ -6,9 +6,21 @@ import { Header } from "./components/header";
 import { AudioInput } from "./components/input-audio";
 import { TextInput } from "./components/input-text";
 
+function handleSubmit(e, payload) {
+  const f = new FormData();
+  Object.keys(payload).forEach((k) => {
+    f.append(k, payload[k]);
+  });
+
+  fetch(`${process.env.API_URL}/responses`, {
+    method: "POST",
+    body: f,
+  });
+}
+
 function App(props) {
-  const [img, setImage] = useState(randomImage());
-  const [audio, setAudio] = useState([]);
+  const [img, setImg] = useState(randomImage());
+  const [audio, setAudio] = useState(null);
   const [text, setText] = useState(null);
   const [payload, setPayload] = useState({});
 
@@ -23,7 +35,6 @@ function App(props) {
   return (
     <>
       <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
           {/* <!--
@@ -47,13 +58,14 @@ function App(props) {
             </div>
             {/* <!-- INPUT SECTION --> */}
             <div class="flex flex-col space-y-4 px-4 sm:px-6">
-              <AudioInput audio={audio} setAudio={setAudio} />
+              <AudioInput setAudio={setAudio} />
               <TextInput text={text} setText={setText} />
             </div>
             <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
               <button
                 type="button"
                 class="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                onClick={(e) => handleSubmit(e, payload)}
               >
                 Submit
               </button>
