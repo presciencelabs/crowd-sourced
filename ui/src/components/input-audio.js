@@ -50,7 +50,7 @@ export function AudioInput({ setAudio }) {
   // watch state changes. Pass audio recording state to
   // parent component when audio blob changes
   useEffect(() => {
-    if (!state.isRecording && state.blob !== null) {
+    if (!state.isRecording) {
       setAudio(state.blob);
     }
   }, [state]);
@@ -73,7 +73,7 @@ export function AudioInput({ setAudio }) {
           };
 
           recorder.onstop = (e) => {
-            dispatch({ type: "postprocess", callback: setAudio });
+            dispatch({ type: "postprocess" });
           };
 
           dispatch({ type: "start", recorder: recorder });
