@@ -29,8 +29,7 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
-	e.POST("/responses", func(c echo.Context) error {
-		return c.String(http.StatusAccepted, "POST /responses; TODO - Implement")
-	})
+	e.POST("/responses", CreateResponse)
+
 	e.Logger.Fatal(e.Start(":8080"))
 }

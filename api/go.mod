@@ -3,6 +3,7 @@ module crowd-sourced/api
 go 1.19
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/labstack/echo/v4 v4.11.4
 )
