@@ -87,8 +87,10 @@ export function AudioInput({ setAudio }) {
   };
 
   return (
-    <div class="flex items-center space-x-3">
-      <div>Speak:</div>
+    <div>
+      <label className="block text-sm font-medium leading-6 text-gray-900 mb-1.5">
+        Speak
+      </label>
       {state.audioUrl === null ? (
         <button class="flex items-center" onClick={handleClick}>
           <svg
