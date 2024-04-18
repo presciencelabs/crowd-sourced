@@ -13,7 +13,10 @@
       "source": "index.html"
     },
     "embed": {
-      "source": "app.js"
+      "source": [
+        "app.js",
+        "css/styles.css"
+      ]
     }
   },
   "includeNodeModules": true,
