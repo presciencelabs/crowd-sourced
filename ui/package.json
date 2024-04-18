@@ -8,6 +8,14 @@
     "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "targets": {
+    "site": {
+      "source": "index.html"
+    },
+    "embed": {
+      "source": "app.js"
+    }
+  },
   "includeNodeModules": true,
   "author": "",
   "license": "ISC",

@@ -108,5 +108,5 @@ function App(props) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  render(<App />, document.body);
+  render(<App />, document.getElementById("cswrapper"));
 });
