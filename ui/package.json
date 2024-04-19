@@ -10,7 +10,8 @@
   },
   "targets": {
     "site": {
-      "source": "index.html"
+      "source": "index.html",
+      "publicUrl": "https://presciencelabs.github.io/crowd-sourced/"
     },
     "embed": {
       "source": [
