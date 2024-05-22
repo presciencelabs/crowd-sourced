@@ -32,6 +32,31 @@ TODO; Add README.md Information
 
    `git push origin site`
 
+### Injecting CrowdSourced in Drupal JS Injector
+
+A Javascript snippet similar to the following is used to dynamically
+inject the CrowdSourced app in Drupal using the JS Injector plugin:
+
+```
+const b = document.body;
+const cswrapper = document.createElement("div");
+cswrapper.setAttribute("id", "cswrapper");
+b.appendChild(cswrapper);
+
+// CSS
+css = document.createElement("link");
+css.href = "https://cdn.jsdelivr.net/gh/presciencelabs/crowd-sourced@embed-v0.2/css/styles.css";
+css.rel = "stylesheet";
+document.head.appendChild(css);
+
+// JS
+s = document.createElement("script");
+s.src = "https://cdn.jsdelivr.net/gh/presciencelabs/crowd-sourced@embed-v0.2/app.js";
+s.async = true
+s.defer = true
+document.body.appendChild(s);
+```
+
 ### RESTful API (/api)
 
 The api stores information created via the user interface. It can be launched locally using docker-compose (`docker compose up --build`), which will make the api available on localhost:8080.
