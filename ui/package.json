@@ -10,7 +10,8 @@
   },
   "targets": {
     "site": {
-      "source": "index.html"
+      "source": "index.html",
+      "publicUrl": "./"
     },
     "embed": {
       "source": [
