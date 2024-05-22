@@ -5,11 +5,12 @@
   "description": "",
   "scripts": {
     "start": "parcel",
-    "build": "parcel build --no-scope-hoist",
+    "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "targets": {
     "site": {
+      "scopeHoist": false,
       "source": "index.html",
       "publicUrl": "./"
     },
