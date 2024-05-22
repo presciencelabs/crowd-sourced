@@ -1,11 +1,10 @@
 import { render } from "preact";
 import { useEffect, useState } from "preact/compat";
-
+import { GetSiteLanguageSelected } from "./helpers";
 import { randomImage } from "./images";
 import { Header } from "./components/header";
 import { AudioInput } from "./components/input-audio";
 import { TextInput } from "./components/input-text";
-import { LanguageInput } from "./components/input-language";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 
 function handleSubmit(e, payload) {
@@ -19,10 +18,7 @@ function handleSubmit(e, payload) {
     body: f,
   });
 }
-
-function App(props) {
-  const [language, setLanguage] = useState(null); // todo; do not default to 'en'
-  const [img, setImg] = useState(randomImage());
+function App({ img, language }) {
   const [audio, setAudio] = useState(null);
   const [text, setText] = useState(null);
   const [payload, setPayload] = useState({});
@@ -94,14 +90,8 @@ function App(props) {
               </div>
               {/* <!-- INPUT SECTION --> */}
               <div class="flex flex-col space-y-3 px-4 sm:px-6">
-                <LanguageInput language={language} setLanguage={setLanguage} />
-
-                {language && (
-                  <>
-                    <TextInput text={text} setText={setText} />
-                    <AudioInput setAudio={setAudio} />
-                  </>
-                )}
+                <TextInput text={text} setText={setText} />
+                <AudioInput setAudio={setAudio} />
               </div>
               <div class="bg-gray-50 px-4 py-6 sm:flex sm:flex-row-reverse sm:px-6">
                 <button
@@ -121,5 +111,14 @@ function App(props) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  render(<App />, document.getElementById("cswrapper"));
+  // Parse DOM in parent website to detrmine selected language
+  // Default to english for local development or demonstration purposes
+  // in non-embedded context.
+  const lang = GetSiteLanguageSelected() || { value: "en", text: "English" };
+  console.log(`crowdsourced selected language: ${JSON.stringify(lang)}`);
+
+  render(
+    <App img={randomImage()} language={lang} />,
+    document.getElementById("cswrapper")
+  );
 });
