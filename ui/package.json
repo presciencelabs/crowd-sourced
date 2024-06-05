@@ -15,6 +15,7 @@
       "publicUrl": "./"
     },
     "embed": {
+      "scopeHoist": false,
       "source": [
         "app.js",
         "css/styles.css"
