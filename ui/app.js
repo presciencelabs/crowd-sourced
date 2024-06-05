@@ -114,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Parse DOM in parent website to detrmine selected language
   // Default to english for local development or demonstration purposes
   // in non-embedded context.
+  console.log("Starting CrowdSourced...");
   const lang = GetSiteLanguageSelected() || { value: "en", text: "English" };
   console.log(`crowdsourced selected language: ${JSON.stringify(lang)}`);
 
