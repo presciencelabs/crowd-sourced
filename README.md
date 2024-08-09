@@ -1,64 +1,137 @@
-# crowd-sourced
+crowd-sourced
+=============
 
-TODO; Add README.md Information
+This application is intended to be delivered via this Drupal plugin: https://www.drupal.org/project/crowd_sourced_popup
 
-## Getting Started
+It presents a popup for collecting textual and auditory language data.
 
-### User Interface (/ui)
+# Setup and Deploy
 
-1. Install node/npm: https://nodejs.org/en/download/
+In addition to the Drupal module named above, this application consists of two parts: the `preact` UI and the `node`/`express` API. _Note_ the `go` API preserved for historical reasons. The overall architecture is convoluted and will be simpilifed if resources allow.
 
-2. Clone this repository, navigate to the "ui" directory, and install npm dependencies with `npm install`.
+The instructions that follow document how to set up the project for local development and production deployment.
 
-3. Start the local development server: `npm start` and navigate to localhost:1234 in a browser window.
+## Development
 
-#### Building & Deploying the User Interface
-
-1. `npm run build`
-
-2. Commit changes. `git commit`
-
-3. Push changes to the 'embed' (embedable) and 'site' (github pages) branches.
-
-   a. Publish Embed
-
-   `git subtree split --branch=embed --prefix=ui/dist/embed/`
-
-   `git push origin embed`
-
-   b. Publish Site (github pages)
-
-   `git subtree split --branch=site --prefix=ui/dist/site/`
-
-   `git push origin site`
-
-### Injecting CrowdSourced in Drupal JS Injector
-
-A Javascript snippet similar to the following is used to dynamically
-inject the CrowdSourced app in Drupal using the JS Injector plugin:
+Start a Dockerized `mongo` server:
 
 ```
-const b = document.body;
-const cswrapper = document.createElement("div");
-cswrapper.setAttribute("id", "cswrapper");
-b.appendChild(cswrapper);
-
-// CSS
-css = document.createElement("link");
-css.href = "https://cdn.jsdelivr.net/gh/presciencelabs/crowd-sourced@embed-v0.2/css/styles.css";
-css.rel = "stylesheet";
-document.head.appendChild(css);
-
-// JS
-s = document.createElement("script");
-s.src = "https://cdn.jsdelivr.net/gh/presciencelabs/crowd-sourced@embed-v0.2/app.js";
-s.async = true
-s.defer = true
-document.body.appendChild(s);
+docker run --name dev-mongo -p 27017:27017 -d mongo
 ```
 
-### RESTful API (/api)
+Once downloaded and executed, the `mongo` server can be restarted like this:
 
-The api stores information created via the user interface. It can be launched locally using docker-compose (`docker compose up --build`), which will make the api available on localhost:8080.
+```
+docker start dev-mongo
+```
 
-The API can also be developed/debugged using a locally-installed version of the [go programming language](https://go.dev/).
+### API (/api)
+
+The API needs to run in its own process. The easiest way to do that is by executing the following instructions in their own terminal window/tab.
+
+From the `api/` directory:
+
+```
+cd api
+```
+
+Configure:
+
+```
+cp .env.example .env
+```
+
+Install dependencies:
+
+```
+npm install
+```
+
+Launch server:
+
+```
+npm start
+```
+
+It is now running on http://localhost:3001/
+
+## UI
+
+From the `ui/` directory:
+
+```
+cd ui
+```
+
+Install dependencies:
+
+```
+npm install
+```
+
+Run the build server:
+
+```
+npm start
+```
+
+It is now running on http://localhost:1234
+
+## Testing
+
+Tests are executed against the dev server and the running API:
+
+```
+npm test
+```
+
+# Production
+
+## API
+
+```
+cd api
+cp .env.example .env
+npm install
+```
+
+## UI
+
+```
+cd ui
+cp .env.example .env
+npm install
+npm run build
+```
+
+From the **base** application directory, copy and configure:
+
+```
+cp .env.example .env
+```
+
+Launch the server:
+
+```
+docker compose up -d
+```
+
+## nginx-proxy
+
+All the certs are provided courtesy of _Let's Encrypt_. There is an example proxy server defined in `nginx-proxy`. You only need one of these per server, so it is prudent to copy the directory into a new location:
+
+```
+cp -r nginx-proxy ..
+cd ../nginx-proxy
+```
+
+Start the container:
+
+```
+docker compose up -d
+```
+
+# License
+
+MIT
+

@@ -1,0 +1,51 @@
+version: '3'
+services:
+  app:
+    image: nginx
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+    expose:
+      - 80
+    volumes:
+      # For the site
+      #- ./ui/dist/site:/usr/share/nginx/html
+      # For the embedded app.js script
+      - ./ui/dist:/usr/share/nginx/html
+      - ./ui/dist/embed/locales/:/usr/share/nginx/html/locales/
+    depends_on:
+      - mongo-api
+  api:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    environment:
+      - NODE_ENV=production
+      - VIRTUAL_HOST=$API_VIRTUAL_HOST
+      - LETSENCRYPT_HOST=$API_VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+    volumes:
+      - ./api:/home/node
+      #- /home/node/node_modules # 2023-3-28 Do I need this?
+    depends_on:
+      - mongo-cs
+  mongo-cs:
+    image: mongo
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+    volumes:
+      - cs_server_data:/data/db
+volumes:
+  cs_server_data:
+networks:
+  default:
+    name: nginx-proxy

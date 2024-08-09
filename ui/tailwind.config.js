@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import { scopedPreflightStyles, isolateInsideOfContainer } from 'tailwindcss-scoped-preflight';
+
 module.exports = {
   content: [
     "./*.{html,js,ts,jsx,tsx}",
@@ -7,5 +9,9 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    scopedPreflightStyles({
+      isolationStrategy: isolateInsideOfContainer('#cswrapper'),
+    }),
+  ],
 };

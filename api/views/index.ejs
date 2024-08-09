@@ -1,0 +1,40 @@
+<% include _partials/head %>
+  <h1><%= process.env.TITLE %></h1>
+  <% if (uploads.length) { %>
+    <article id="submissions">
+      <header>
+        <h2>Submissions <a id="download-data" href="/zip" class="button">Zip & Download Data</a></h2>
+      </header>
+      <table id="submissions-table" class="striped">
+        <thead>
+          <tr>
+            <td>Image</td>
+            <td>Text</td>
+            <td>Audio</td>
+            <td>Language</td>
+            <td>Source</td>
+            <td>Date/Time</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let upload of uploads) { %>
+          <tr>
+            <td><img src="<%= upload.imageSource %>"></td>
+            <td><%= upload.text ? upload.text : '' %></td>
+            <td>
+              <% if (upload.audio) { %>
+                <audio src="/uploads/<%= upload.audio %>" controls></audio>
+              <% } %>
+            </td>
+            <td><%= upload.language %></td>
+            <td><a href="<%= upload.submissionSource %>" target="_blank"><%= upload.submissionSource %></a></td>
+            <td><%= new Date(upload.createdAt).toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </article>
+  <% } else { %>
+    <h2 id="no-submissions">No submissions yet</h2>
+  <% } %>
+<% include _partials/footer %>

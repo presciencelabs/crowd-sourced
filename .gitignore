@@ -130,3 +130,8 @@ out
 
 # vscode debug
 **__debug_bin
+
+*.sw*
+ui/dist
+
+uploads/

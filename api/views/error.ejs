@@ -1,0 +1,20 @@
+<% if (process.env.NODE_ENV !== 'production') { %>
+<h1>Uh oh!</h1>
+<h2><%= error.status %></h2>
+<pre><%= error.stack %></pre>
+<% } else { %>
+<% include _partials/head %>
+  <main class="container">
+    <article class="hero is-full-screen">
+      <section class="logo is-center is-vertical-align">
+        <img src="/images/memory-lane/camera-logo.svg" width="128">
+        <h3>
+          <%= error.status %>
+        </h3>
+        <small>Uh oh! Something goofy happened!</small>
+        <br>
+      </section>
+    </article>
+  </main>
+<% include _partials/footer %>
+<% } %>
