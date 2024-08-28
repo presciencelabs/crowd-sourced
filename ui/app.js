@@ -67,7 +67,7 @@ function App({ img, language }) {
         >
           {/* <!--
           Background backdrop, show/hide based on modal state.
-      
+
           Entering: "ease-out duration-300"
             From: "opacity-0"
             To: "opacity-100"
@@ -139,7 +139,13 @@ function App({ img, language }) {
 }
 
 console.log("Starting CrowdSourced...");
-const lang = GetSiteLanguageSelected() || { value: "en", text: "English" };
+let lang;
+try {
+  // Is the language code embedded in the host page?
+  lang = langCode;
+} catch (err) {
+  lang = GetSiteLanguageSelected() || { value: "en", text: "English" };
+}
 console.log(`crowdsourced selected language: ${JSON.stringify(lang)}`);
 
 render(

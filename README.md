@@ -77,14 +77,6 @@ npm start
 
 It is now running on http://localhost:1234
 
-## Testing
-
-Tests are executed against the dev server and the running API:
-
-```
-npm test
-```
-
 # Production
 
 ## API
