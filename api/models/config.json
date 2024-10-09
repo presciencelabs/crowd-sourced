@@ -1,0 +1,28 @@
+{
+  "development": {
+    "username": "crowd_sourced",
+    "password": "secret",
+    "database": "crowd_sourced_development",
+    "host": "localhost"
+  },
+  "test": {
+    "username": "crowd_sourced",
+    "password": "secret",
+    "database": "crowd_sourced_test",
+    "host": "localhost"
+  },
+  "staging": {
+    "username": "crowd_sourced_staging",
+    "password": "secret_staging",
+    "database": "crowd_sourced_staging",
+    "host": "mongo-staging-cs",
+    "dialect": "mongodb"
+  },
+  "production": {
+    "username": "crowd_sourced",
+    "password": "secret",
+    "database": "crowd_sourced_production",
+    "host": "mongo-cs",
+    "dialect": "mongodb"
+  }
+}

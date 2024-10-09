@@ -1,0 +1,30 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    restart: unless-stopped
+    environment:
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+    expose:
+      - 80
+    volumes:
+      # For the site
+      #- ./ui/dist/site:/usr/share/nginx/html
+      # For the embedded app.js script
+      - ./ui/dist:/usr/share/nginx/html
+  api:
+    restart: unless-stopped
+    build:
+      dockerfile: api.Dockerfile
+    environment:
+      - VIRTUAL_HOST=$API_VIRTUAL_HOST
+      - LETSENCRYPT_HOST=$API_VIRTUAL_HOST
+      - LETSENCRYPT_EMAIL=$LETSENCRYPT_EMAIL
+    expose:
+      - 8080
+
+networks:
+  default:
+    name: nginx-proxy
